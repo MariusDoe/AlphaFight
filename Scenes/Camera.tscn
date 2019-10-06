@@ -1,77 +1,15 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=2 format=2]
 
-[ext_resource path="res://Camera.gd" type="Script" id=1]
-[ext_resource path="res://MouseCollider.gd" type="Script" id=2]
-
-[sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 19.9999, 510 )
-
-[sub_resource type="RectangleShape2D" id=2]
-extents = Vector2( 20, 300 )
+[ext_resource path="res://Scenes/Camera.gd" type="Script" id=1]
 
 [node name="Camera2D" type="Camera2D"]
 position = Vector2( 0, -1.43201 )
 current = true
+drag_margin_left = 0.0
+drag_margin_top = 0.0
+drag_margin_right = 0.0
+drag_margin_bottom = 0.0
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_group_": true
 }
-
-[node name="MouseCollider" type="Node2D" parent="."]
-position = Vector2( -0.950073, 0 )
-__meta__ = {
-"_edit_group_": true
-}
-
-[node name="Bottom" type="Area2D" parent="MouseCollider"]
-position = Vector2( 0, 280 )
-rotation = 1.5708
-script = ExtResource( 2 )
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="MouseCollider/Bottom"]
-position = Vector2( 6.10352e-005, -3.05176e-005 )
-shape = SubResource( 1 )
-
-[node name="Panel" type="Panel" parent="MouseCollider/Bottom"]
-margin_left = -20.0
-margin_top = -510.0
-margin_right = 20.0
-margin_bottom = 510.0
-
-[node name="Top" type="Area2D" parent="MouseCollider"]
-visible = false
-position = Vector2( 0, -280 )
-rotation = 1.5708
-__meta__ = {
-"_edit_group_": true
-}
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="MouseCollider/Top"]
-position = Vector2( 6.10352e-005, -3.05176e-005 )
-shape = SubResource( 1 )
-
-[node name="Right" type="Area2D" parent="MouseCollider"]
-visible = false
-position = Vector2( 490, 0 )
-__meta__ = {
-"_edit_group_": true
-}
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="MouseCollider/Right"]
-shape = SubResource( 2 )
-
-[node name="Left" type="Area2D" parent="MouseCollider"]
-visible = false
-position = Vector2( -490, 0 )
-__meta__ = {
-"_edit_group_": true
-}
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="MouseCollider/Left"]
-shape = SubResource( 2 )
-[connection signal="camera_move_end" from="MouseCollider/Bottom" to="." method="_on_camera_move_end"]
-[connection signal="camera_move_start" from="MouseCollider/Bottom" to="." method="_on_camera_move_start"]
-[connection signal="mouse_entered" from="MouseCollider/Bottom" to="MouseCollider/Bottom" method="_on_mouse_entered"]
-[connection signal="mouse_exited" from="MouseCollider/Bottom" to="MouseCollider/Bottom" method="_on_mouse_exited"]
-[connection signal="mouse_entered" from="MouseCollider/Top" to="MouseCollider/Top" method="_on_mouse_entered"]
-[connection signal="mouse_exited" from="MouseCollider/Top" to="MouseCollider/Top" method="_on_mouse_exited"]

@@ -1,18 +1,11 @@
 extends Camera2D
 
-var target = position
 var speed = 50
 
-func _on_camera_move_start(pos: Vector2) -> void:
-	target += pos
-	print(target)
-
-func _on_camera_move_end(pos) -> void:
-	target -= pos
-	print(target)
-
-func _physics_process(delta: float) -> void:
-	if (target - position).length() < speed * delta:
-		position = target
-	else:
-		position += (target - position).normalized() * speed * delta
+func _process(delta: float) -> void:
+	print("frame")
+	var pos = get_viewport().get_mouse_position()
+	var rect = get_viewport_rect()
+	var center = (rect.position + rect.end) / 2
+	if not rect.grow(-50).has_point(pos):
+		position += (pos - center).normalized() * speed * delta
