@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Scenes/Character.gd" type="Script" id=1]
 [ext_resource path="res://theme.tres" type="Theme" id=2]
@@ -6,17 +6,10 @@
 [sub_resource type="CircleShape2D" id=1]
 radius = 13.4764
 
-[sub_resource type="DynamicFont" id=2]
-size = 51
-font_data = ExtResource( 2 )
-
-[sub_resource type="Theme" id=3]
-default_font = SubResource( 2 )
-
-[sub_resource type="CircleShape2D" id=4]
+[sub_resource type="CircleShape2D" id=2]
 radius = 435.211
 
-[sub_resource type="CircleShape2D" id=5]
+[sub_resource type="CircleShape2D" id=3]
 radius = 27.8132
 
 [node name="Character" type="KinematicBody2D" groups=[
@@ -36,7 +29,6 @@ size_flags_horizontal = 3
 size_flags_vertical = 6
 theme = ExtResource( 2 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
-custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_constants/shadow_offset_x = 0
 custom_constants/shadow_offset_y = 0
@@ -52,15 +44,16 @@ polygon = PoolVector2Array( 10, -10, 10, 10, -10, 10, -10, -10 )
 
 [node name="Square" type="Polygon2D" parent="."]
 polygon = PoolVector2Array( 10, -10, 10, 10, -10, 10, -10, -10 )
+
 [node name="Area2D" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-shape = SubResource( 4 )
+shape = SubResource( 2 )
 
 [node name="Hitbox" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
-shape = SubResource( 5 )
+shape = SubResource( 3 )
 [connection signal="body_entered" from="Area2D" to="." method="_on_Area2D_body_entered"]
 [connection signal="body_exited" from="Area2D" to="." method="_on_Area2D_body_exited"]
 [connection signal="area_entered" from="Hitbox" to="." method="_on_Hitbox_area_entered"]

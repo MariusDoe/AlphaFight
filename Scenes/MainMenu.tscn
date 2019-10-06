@@ -60,6 +60,7 @@ theme = ExtResource( 2 )
 text = "Credits"
 
 [node name="Start" type="CenterContainer" parent="Background"]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 

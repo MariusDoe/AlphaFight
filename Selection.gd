@@ -12,14 +12,12 @@ func _ready():
 func _process(delta):
 	if Input.is_action_just_pressed("dragging"):
 		drag = true
-		start = self.get_global_mouse_position()#get_local_mouse_position()
+		start = get_global_mouse_position()#get_local_mouse_position()
 	if drag:
-		end = self.get_global_mouse_position()#get_local_mouse_position()
+		end = get_global_mouse_position()#get_local_mouse_position()
 		#draw_area()
 	if Input.is_action_just_released("dragging"):
-		print("select units")
 		emit_signal("new_selection", Rect2(start, end - start))
-		
 		drag = false
 		start = Vector2()
 		end = Vector2()
@@ -27,9 +25,10 @@ func _process(delta):
 	
 func _draw():
 	var view_rect = get_viewport_rect()
-	draw_rect(Rect2(start  - (view_rect.position + view_rect.end) / 2, end - start), Color(1,0,0, 0.2))
+	var center = (view_rect.position + view_rect.end) / 2
+	draw_rect(Rect2(start - center, end - start), Color(1, 0, 0, 0.2))
 
 func connect_to_particles():
 	var x = get_tree().get_nodes_in_group("Selectable")
 	for node in x:
-		self.connect("new_selection", node, "check_selected")
+		connect("new_selection", node, "_on_try_select")
