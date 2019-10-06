@@ -13,8 +13,9 @@ var timeSinceLastShot = 0
 var reloadTime = 0
 var destroy = false
 var cacheDidntFindOpponent = false
-
+var intent = Vector2(0,0)
 func _ready() -> void:
+	intent = Vector2(rand_range(-1,1), rand_range(-1,1)).normalized()
 	updateLife()
 	get_tree().root.get_node("Game/Camera2D").connect("zoom_changed", self, "_on_zoom_changed")
 	_on_zoom_changed()
@@ -70,6 +71,8 @@ func handleDying():
 			destroy = true
 
 func _process(delta):
+	if isEnemy:
+		_calculate_movement()
 	timeSinceLastShot += delta
 	if timeSinceLastShot > reloadTime:
 		tryShoot()
@@ -84,6 +87,29 @@ func _process(delta):
 	if Input.is_action_just_pressed("move_command") and selected:
 		setTarget(self.get_global_mouse_position())
 
+func _calculate_movement(): #only if is_enemy = true
+	var sum_pos = Vector2(0,0)
+	var number_friends = 0
+	for character in charactersInRange:
+		if character.isEnemy == isEnemy:
+			#friend
+			number_friends += 1
+			sum_pos += character.position - position
+		else:
+			sum_pos += (character.position - position) * 20
+	var middle_pos = sum_pos/(number_friends + (len(charactersInRange) - number_friends) * 20)
+	
+	var sum_intents = Vector2(0,0)
+	for character in charactersInRange:
+		if character.isEnemy == isEnemy:
+			sum_intents += character.intent
+	var middle_intent = sum_intents/number_friends
+	
+	intent = (middle_intent*100).normalized() #+ Vector2(rand_range(-1,1), rand_range(-1,1)).normalized()).normalized()
+	var position_change = (intent + middle_pos * 1).normalized()
+	print(position_change)
+	setTarget(position + position_change * 100000000000000)
+	
 func _physics_process(delta: float) -> void:
 	move_and_collide((target - position).clamped(speed))
 	if destroy == true:
