@@ -2,6 +2,10 @@ extends KinematicBody2D
 
 var index: int = 0
 
+func _ready() -> void:
+	get_tree().root.get_node("Game/Camera2D").connect("zoom_changed", self, "_on_zoom_changed")
+	_on_zoom_changed()
+
 func setIndex(i: int):
 	index = i
 	setText(char(index + 65))
@@ -34,6 +38,7 @@ func setTarget(pos: Vector2):
 
 func setColor(color: Color):
 	$Text.add_color_override("font_color", color)
+	$Square.color = color
 
 func _process(delta):
 	if selected:
@@ -48,8 +53,7 @@ func _process(delta):
 		setTarget(self.get_global_mouse_position())
 
 func _physics_process(delta: float) -> void:
-	if not (target - position).length() < speed * delta:
-		move_and_collide((target - position).normalized() * speed)
+	move_and_collide((target - position).clamped(speed))
 
 #this function checks for selection
 func check_selected(selection_rect):
@@ -59,3 +63,18 @@ func check_selected(selection_rect):
 		selected = true
 	else:
 		selected = false
+	$SelectedSquare.visible = $Square.visible and selected
+
+func _on_zoom_changed():
+	if $Text.get_canvas_transform().get_scale().length() < 1.2:
+		$Text.visible = false
+		$Square.visible = true
+		$Square.scale = Vector2(1, 1) / $Square.get_canvas_transform().get_scale()
+		$SelectedSquare.visible = selected
+		$SelectedSquare.scale = Vector2(1, 1) / $SelectedSquare.get_canvas_transform().get_scale()
+		$SelectedSquare.position = Vector2(2, 2) / $SelectedSquare.get_canvas_transform().get_scale()
+
+	else:
+		$Text.visible = true
+		$Square.visible = false
+		$SelectedSquare.visible = false
