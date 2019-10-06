@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://CharacterSpawner.tscn" type="PackedScene" id=1]
-[ext_resource path="res://Camera.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Scenes/CharacterSpawner.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Scenes/Camera.tscn" type="PackedScene" id=2]
 
 [node name="Game" type="Node2D"]
 position = Vector2( 510, 300 )

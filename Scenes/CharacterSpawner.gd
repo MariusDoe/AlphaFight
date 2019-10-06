@@ -1,6 +1,6 @@
 extends Node
 
-onready var Character = preload("res://Character.tscn")
+onready var Character = preload("res://Scenes/Character.tscn")
 
 var characters = []
 
