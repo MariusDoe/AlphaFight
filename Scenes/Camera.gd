@@ -1,6 +1,6 @@
 extends Camera2D
 
-var speed = 50
+var speed = 200
 var scaleFactor = 0.1
 
 func _process(delta: float) -> void:

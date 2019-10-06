@@ -8,7 +8,7 @@ func setEnemy(is_enemy: bool):
 
 var enemy = false
 var target = position
-var speed = 100
+var speed = 2
 
 func setPos(pos: Vector2):
 	position = pos
