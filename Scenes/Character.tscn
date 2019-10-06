@@ -3,6 +3,9 @@
 [ext_resource path="res://Scenes/Character.gd" type="Script" id=1]
 [ext_resource path="res://fonts/RobotoMono-Bold.ttf" type="DynamicFontData" id=2]
 
+[sub_resource type="CircleShape2D" id=3]
+radius = 13.4764
+
 [sub_resource type="DynamicFont" id=1]
 size = 51
 font_data = ExtResource( 2 )
@@ -10,11 +13,13 @@ font_data = ExtResource( 2 )
 [sub_resource type="Theme" id=2]
 default_font = SubResource( 1 )
 
-[sub_resource type="CircleShape2D" id=3]
-radius = 34.3546
-
-[node name="Character" type="Node2D"]
+[node name="Character" type="KinematicBody2D" groups=[
+"Selectable",
+]]
 script = ExtResource( 1 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( 3 )
 
 [node name="Text" type="Label" parent="."]
 margin_left = -35.0
@@ -28,8 +33,3 @@ text = "A"
 align = 1
 valign = 1
 uppercase = true
-
-[node name="Area2D" type="Area2D" parent="."]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-shape = SubResource( 3 )
