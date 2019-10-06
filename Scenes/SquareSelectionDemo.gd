@@ -3,8 +3,11 @@ extends Node2D
 var drag = false
 var start = Vector2()
 var end = Vector2()
+
+signal new_selection
+
 func _ready():
-	pass # Replace with function body.
+	connect_to_particles()
 
 func _process(delta):
 	if Input.is_action_just_pressed("dragging"):
@@ -15,10 +18,19 @@ func _process(delta):
 		#draw_area()
 	if Input.is_action_just_released("dragging"):
 		print("select units")
+		emit_signal("new_selection", Rect2(start, end - start))
+		
 		drag = false
 		start = Vector2()
 		end = Vector2()
 	update()
+	
 func _draw():
-	print("draw_rect")
+	
+	#print("draw_rect")
 	draw_rect(Rect2(start, end - start), Color(1,0,0, 0.2))
+
+func connect_to_particles():
+	var x = get_tree().get_nodes_in_group("Letter")
+	for node in x:
+		self.connect("new_selection", node, "check_selected")
