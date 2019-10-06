@@ -10,7 +10,7 @@ func _ready() -> void:
 	wordsFile.open(wordsFilePath, File.READ)
 	var words = wordsFile.get_as_text().split("\n")
 	for i in range(20):
-		spawnWord(words[randi() % words.size()], pointToRect(randomPointInRect(Rect2(-10000, -10000, 20000, 20000)), 50))
+		spawnWord(words[randi() % words.size()], pointToRect(randomPointInRect(Rect2(-1000, -1000, 2000, 2000)), 50))
 
 func pointToRect(point: Vector2, size: float):
 	return Rect2(point, point).grow(size)
