@@ -1,8 +1,23 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Scenes/MainMenu.gd" type="Script" id=1]
 [ext_resource path="res://theme.tres" type="Theme" id=2]
-[ext_resource path="res://Music/Chemiehintergrund.wav" type="AudioStream" id=3]
+[ext_resource path="res://Scenes/LevelButton.gd" type="Script" id=3]
+[ext_resource path="res://fonts/RobotoMono-Light.ttf" type="DynamicFontData" id=4]
+[ext_resource path="res://Music/Chemiehintergrund.wav" type="AudioStream" id=5]
+
+[sub_resource type="DynamicFont" id=1]
+font_data = ExtResource( 4 )
+
+[sub_resource type="Theme" id=2]
+default_font = SubResource( 1 )
+
+[sub_resource type="DynamicFont" id=3]
+size = 24
+font_data = ExtResource( 4 )
+
+[sub_resource type="Theme" id=4]
+default_font = SubResource( 3 )
 
 [node name="MainMenu" type="Control"]
 anchor_right = 1.0
@@ -17,20 +32,23 @@ rect_pivot_offset = Vector2( 755.374, 393.027 )
 theme = ExtResource( 2 )
 color = Color( 0, 0, 0, 1 )
 
-[node name="Main" type="CenterContainer" parent="Background"]
+[node name="Main" type="CenterContainer" parent="."]
+editor/display_folded = true
 anchor_right = 1.0
 anchor_bottom = 1.0
 theme = ExtResource( 2 )
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Background/Main"]
+[node name="VBox" type="VBoxContainer" parent="Main"]
+editor/display_folded = true
 margin_left = 371.0
-margin_top = 161.0
+margin_top = 131.0
 margin_right = 653.0
-margin_bottom = 438.0
+margin_bottom = 469.0
 rect_pivot_offset = Vector2( -0.312073, -1.28723 )
 theme = ExtResource( 2 )
 
-[node name="Title" type="MarginContainer" parent="Background/Main/VBoxContainer"]
+[node name="Title" type="MarginContainer" parent="Main/VBox"]
+editor/display_folded = true
 margin_right = 282.0
 margin_bottom = 155.0
 rect_pivot_offset = Vector2( -430.194, 100.496 )
@@ -38,73 +56,348 @@ theme = ExtResource( 2 )
 custom_constants/margin_top = 40
 custom_constants/margin_bottom = 60
 
-[node name="Label" type="Label" parent="Background/Main/VBoxContainer/Title"]
+[node name="Label" type="Label" parent="Main/VBox/Title"]
 margin_left = 40.0
 margin_top = 40.0
 margin_right = 242.0
 margin_bottom = 95.0
 theme = ExtResource( 2 )
 text = "AlphaFight"
+align = 1
 
-[node name="Start" type="Button" parent="Background/Main/VBoxContainer"]
+[node name="Start" type="Button" parent="Main/VBox"]
 margin_top = 161.0
 margin_right = 282.0
 margin_bottom = 216.0
 theme = ExtResource( 2 )
 text = "Start"
 
-[node name="Credits" type="Button" parent="Background/Main/VBoxContainer"]
+[node name="HowTo" type="Button" parent="Main/VBox"]
 margin_top = 222.0
 margin_right = 282.0
 margin_bottom = 277.0
 theme = ExtResource( 2 )
+text = "HowTo"
+
+[node name="Credits" type="Button" parent="Main/VBox"]
+margin_top = 283.0
+margin_right = 282.0
+margin_bottom = 338.0
+theme = ExtResource( 2 )
 text = "Credits"
 
-[node name="Start" type="CenterContainer" parent="Background"]
+[node name="Start" type="CenterContainer" parent="."]
+editor/display_folded = true
 visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Background/Start"]
-margin_left = 371.0
-margin_top = 161.0
-margin_right = 653.0
-margin_bottom = 438.0
+[node name="VBox" type="VBoxContainer" parent="Start"]
+editor/display_folded = true
+margin_left = 349.0
+margin_top = 93.0
+margin_right = 675.0
+margin_bottom = 506.0
 rect_pivot_offset = Vector2( -0.312073, -1.28723 )
 theme = ExtResource( 2 )
 
-[node name="Title" type="MarginContainer" parent="Background/Start/VBoxContainer"]
-margin_right = 282.0
-margin_bottom = 155.0
+[node name="Title" type="MarginContainer" parent="Start/VBox"]
+editor/display_folded = true
+margin_right = 326.0
+margin_bottom = 105.0
 rect_pivot_offset = Vector2( -430.194, 100.496 )
 theme = ExtResource( 2 )
 custom_constants/margin_top = 40
-custom_constants/margin_bottom = 60
+custom_constants/margin_bottom = 10
 
-[node name="Label" type="Label" parent="Background/Start/VBoxContainer/Title"]
+[node name="Label" type="Label" parent="Start/VBox/Title"]
+margin_left = 40.0
+margin_top = 40.0
+margin_right = 286.0
+margin_bottom = 95.0
+theme = ExtResource( 2 )
+text = "AlphaFight"
+align = 1
+
+[node name="Level" type="Label" parent="Start/VBox"]
+margin_top = 111.0
+margin_right = 326.0
+margin_bottom = 166.0
+text = "Level"
+align = 1
+
+[node name="Scroll" type="ScrollContainer" parent="Start/VBox"]
+editor/display_folded = true
+margin_top = 172.0
+margin_right = 326.0
+margin_bottom = 352.0
+rect_min_size = Vector2( 0, 180 )
+scroll_horizontal_enabled = false
+
+[node name="Levels" type="VBoxContainer" parent="Start/VBox/Scroll"]
+margin_left = 2.0
+margin_top = 2.0
+margin_right = 324.0
+margin_bottom = 178.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="1" type="Button" parent="Start/VBox/Scroll/Levels"]
+margin_right = 322.0
+margin_bottom = 55.0
+size_flags_horizontal = 3
+text = "1 [??:??:??.???]"
+script = ExtResource( 3 )
+
+[node name="Back" type="Button" parent="Start/VBox"]
+margin_top = 358.0
+margin_right = 326.0
+margin_bottom = 413.0
+theme = ExtResource( 2 )
+text = "Back"
+
+[node name="HowTo" type="CenterContainer" parent="."]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="VBox" type="VBoxContainer" parent="HowTo"]
+margin_left = 371.0
+margin_top = 39.0
+margin_right = 653.0
+margin_bottom = 561.0
+rect_pivot_offset = Vector2( -0.312073, -1.28723 )
+theme = ExtResource( 2 )
+
+[node name="Title" type="MarginContainer" parent="HowTo/VBox"]
+editor/display_folded = true
+margin_right = 282.0
+margin_bottom = 105.0
+rect_pivot_offset = Vector2( -430.194, 100.496 )
+theme = ExtResource( 2 )
+custom_constants/margin_top = 40
+custom_constants/margin_bottom = 10
+
+[node name="Label" type="Label" parent="HowTo/VBox/Title"]
 margin_left = 40.0
 margin_top = 40.0
 margin_right = 242.0
 margin_bottom = 95.0
 theme = ExtResource( 2 )
 text = "AlphaFight"
+align = 1
 
-[node name="New" type="Button" parent="Background/Start/VBoxContainer"]
-margin_top = 161.0
+[node name="Scroll" type="ScrollContainer" parent="HowTo/VBox"]
+margin_top = 111.0
 margin_right = 282.0
-margin_bottom = 216.0
-theme = ExtResource( 2 )
-text = "New"
+margin_bottom = 461.0
+rect_min_size = Vector2( 0, 350 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
 
-[node name="Load" type="Button" parent="Background/Start/VBoxContainer"]
-margin_top = 222.0
+[node name="VBox" type="VBoxContainer" parent="HowTo/VBox/Scroll"]
+margin_left = 2.0
+margin_top = 2.0
+margin_right = 280.0
+margin_bottom = 2762.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="HowTo" type="Label" parent="HowTo/VBox/Scroll/VBox"]
+margin_right = 260.0
+margin_bottom = 55.0
+text = "HowTo"
+align = 1
+
+[node name="About" type="Label" parent="HowTo/VBox/Scroll/VBox"]
+margin_top = 61.0
+margin_right = 260.0
+margin_bottom = 693.0
+theme = SubResource( 2 )
+text = "You start with nothing.
+Literally.
+The letters \"NOTHING\" are on your screen.
+Your goal in each level is to capture the whole field with your characters.
+After you completed one level, you can play the next one.
+The field consists of enemy characters, which will be spawned as you come near them.
+You can capture the enemies by shooting them with your characters.
+This happens automatically as soon as your characters get in range.
+But beware: the enemies will shoot back!"
+autowrap = true
+
+[node name="Controls" type="Label" parent="HowTo/VBox/Scroll/VBox"]
+margin_top = 699.0
+margin_right = 260.0
+margin_bottom = 744.0
+theme = SubResource( 4 )
+text = "Controls"
+align = 1
+autowrap = true
+
+[node name="ControlsText" type="Label" parent="HowTo/VBox/Scroll/VBox"]
+margin_top = 750.0
+margin_right = 260.0
+margin_bottom = 1122.0
+theme = SubResource( 2 )
+text = "You pan by moving your cursor to the edges of the screen.
+Zooming is done with your scroll wheel.
+Select characters with left-click-drag.
+Selected characters appear with a yellow shadow.
+Move selected characters by right-clicking on the target position.
+Spread selected characters by middle clicking the place they should move away from.
+You can pause the game by pressing the escape key."
+autowrap = true
+
+[node name="Rules" type="Label" parent="HowTo/VBox/Scroll/VBox"]
+margin_top = 699.0
+margin_right = 260.0
+margin_bottom = 744.0
+theme = SubResource( 4 )
+text = "Rules"
+align = 1
+autowrap = true
+
+[node name="RulesText" type="Label" parent="HowTo/VBox/Scroll/VBox"]
+margin_top = 750.0
+margin_right = 260.0
+margin_bottom = 1122.0
+theme = SubResource( 2 )
+text = "Characters in the front of the alphabet are stronger when attacking: They shoot faster and move quicker.
+Characters in the back of the alphabet are stronger when defending: They have more health points, that is they can take more damage.
+Each level will spawn 20 more enemies than the last one (also starting with 20).
+Not all enemy characters will spawn at once.
+New enemies spawn in increasingly larger groups in 5-second intervals.
+You can see how many enemies will spawn later on the \"Waiting\" counter (top left).
+When you move a specific distance away from enemies, they will despawn and the \"Waiting\" counter is increased accordingly.
+The \"Players\" and \"Enemies\" counters keep track of your alive characters and the alive enemy characters, respectively.
+The time you need for a level is measured and your highscores are displayed next to the level numbers (start menu)."
+autowrap = true
+
+[node name="Visuals" type="Label" parent="HowTo/VBox/Scroll/VBox"]
+margin_top = 699.0
+margin_right = 260.0
+margin_bottom = 744.0
+theme = SubResource( 4 )
+text = "Visuals"
+align = 1
+autowrap = true
+
+[node name="VisualsText" type="Label" parent="HowTo/VBox/Scroll/VBox"]
+margin_top = 750.0
+margin_right = 260.0
+margin_bottom = 1122.0
+theme = SubResource( 2 )
+text = "Enemies appear with a red tint.
+Your characters appear with a green tint.
+Characters in the back of the alphabet appear with a blue tint.
+Characters that lost health appear darker."
+autowrap = true
+
+[node name="Back" type="Button" parent="HowTo/VBox"]
+margin_top = 467.0
 margin_right = 282.0
-margin_bottom = 277.0
+margin_bottom = 522.0
 theme = ExtResource( 2 )
-text = "Load"
+text = "Back"
+
+[node name="Credits" type="CenterContainer" parent="."]
+editor/display_folded = true
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="VBox" type="VBoxContainer" parent="Credits"]
+editor/display_folded = true
+margin_left = 371.0
+margin_top = 208.0
+margin_right = 653.0
+margin_bottom = 392.0
+rect_pivot_offset = Vector2( -0.312073, -1.28723 )
+theme = ExtResource( 2 )
+
+[node name="Title" type="MarginContainer" parent="Credits/VBox"]
+editor/display_folded = true
+margin_right = 282.0
+margin_bottom = 105.0
+rect_pivot_offset = Vector2( -430.194, 100.496 )
+theme = ExtResource( 2 )
+custom_constants/margin_top = 40
+custom_constants/margin_bottom = 10
+
+[node name="Label" type="Label" parent="Credits/VBox/Title"]
+margin_left = 40.0
+margin_top = 40.0
+margin_right = 242.0
+margin_bottom = 95.0
+theme = ExtResource( 2 )
+text = "AlphaFight"
+align = 1
+
+[node name="Text" type="PanelContainer" parent="Credits/VBox"]
+editor/display_folded = true
+margin_top = 111.0
+margin_right = 282.0
+margin_bottom = 439.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="VBox" type="VBoxContainer" parent="Credits/VBox/Text"]
+editor/display_folded = true
+margin_left = 9.0
+margin_top = 6.0
+margin_right = 273.0
+margin_bottom = 322.0
+
+[node name="Credits" type="Label" parent="Credits/VBox/Text/VBox"]
+margin_right = 264.0
+margin_bottom = 55.0
+text = "Credits"
+align = 1
+
+[node name="LD45" type="Label" parent="Credits/VBox/Text/VBox"]
+margin_top = 61.0
+margin_right = 264.0
+margin_bottom = 95.0
+theme = SubResource( 2 )
+text = "Created for Ludum Dare 45"
+autowrap = true
+
+[node name="Contributers" type="Label" parent="Credits/VBox/Text/VBox"]
+margin_top = 101.0
+margin_right = 264.0
+margin_bottom = 146.0
+theme = SubResource( 4 )
+text = "Contributers"
+align = 1
+autowrap = true
+
+[node name="List" type="Label" parent="Credits/VBox/Text/VBox"]
+margin_top = 152.0
+margin_right = 264.0
+margin_bottom = 316.0
+theme = SubResource( 2 )
+text = "Idea, Game Design and Programming:
+  Linus Andersen
+  Marius Dörbandt
+Music:
+  Julius Andersen"
+autowrap = true
+
+[node name="Back" type="Button" parent="Credits/VBox"]
+margin_top = 445.0
+margin_right = 282.0
+margin_bottom = 500.0
+theme = ExtResource( 2 )
+text = "Back"
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 3 )
+stream = ExtResource( 5 )
 autoplay = true
-[connection signal="pressed" from="Background/Main/VBoxContainer/Start" to="." method="_on_Start_pressed"]
-[connection signal="pressed" from="Background/Start/VBoxContainer/New" to="." method="_on_Start_pressed"]
+[connection signal="pressed" from="Main/VBox/Start" to="." method="_on_Start_pressed"]
+[connection signal="pressed" from="Main/VBox/HowTo" to="." method="_on_HowTo_pressed"]
+[connection signal="pressed" from="Main/VBox/Credits" to="." method="_on_Credits_pressed"]
+[connection signal="level_button_pressed" from="Start/VBox/Scroll/Levels/1" to="." method="_on_level_button_pressed"]
+[connection signal="pressed" from="Start/VBox/Scroll/Levels/1" to="Start/VBox/Scroll/Levels/1" method="_on_pressed"]
+[connection signal="pressed" from="Start/VBox/Back" to="." method="_on_Back_pressed"]
+[connection signal="pressed" from="HowTo/VBox/Back" to="." method="_on_Back_pressed"]
+[connection signal="pressed" from="Credits/VBox/Back" to="." method="_on_Back_pressed"]

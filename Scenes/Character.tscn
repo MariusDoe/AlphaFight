@@ -38,11 +38,13 @@ valign = 1
 uppercase = true
 
 [node name="SelectedSquare" type="Polygon2D" parent="."]
-position = Vector2( 2, 2 )
+position = Vector2( 1, 1 )
+scale = Vector2( 0.5, 0.5 )
 color = Color( 1, 1, 0, 1 )
 polygon = PoolVector2Array( 10, -10, 10, 10, -10, 10, -10, -10 )
 
 [node name="Square" type="Polygon2D" parent="."]
+scale = Vector2( 0.5, 0.5 )
 polygon = PoolVector2Array( 10, -10, 10, 10, -10, 10, -10, -10 )
 
 [node name="Area2D" type="Area2D" parent="."]
@@ -53,6 +55,7 @@ shape = SubResource( 2 )
 [node name="Hitbox" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+position = Vector2( -0.0321732, -0.0643444 )
 shape = SubResource( 3 )
 [connection signal="body_entered" from="Area2D" to="." method="_on_Area2D_body_entered"]
 [connection signal="body_exited" from="Area2D" to="." method="_on_Area2D_body_exited"]

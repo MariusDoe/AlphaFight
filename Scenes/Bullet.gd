@@ -8,6 +8,9 @@ var speed = 200
 var isEnemy = false
 var lifetime = 2
 
+func setColor(color: Color):
+	$Sprite.modulate = color
+
 func setTarget(pos: Vector2):
 	dir = pos - position
 
