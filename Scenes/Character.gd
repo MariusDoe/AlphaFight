@@ -7,12 +7,13 @@ var isEnemy = false
 var target = position
 var speed = 0
 var charactersInRange = []
-var opponentsInRange = []
 var Bullet = preload("res://Scenes/Bullet.tscn")
 var timeSinceLastShot = 0
 var reloadTime = 0
 var destroy = false
 var cacheDidntFindOpponent = false
+
+signal character_dying(character)
 
 func _ready() -> void:
 	updateLife()
@@ -68,6 +69,7 @@ func handleDying():
 	else:
 		if life <= 0:
 			destroy = true
+			emit_signal("character_dying", self)
 
 func _process(delta):
 	timeSinceLastShot += delta
