@@ -14,7 +14,9 @@ var reloadTime = 0
 var destroy = false
 var cacheDidntFindOpponent = false
 var intent = Vector2(0,0)
+
 func _ready() -> void:
+	randomize()
 	intent = Vector2(rand_range(-1,1), rand_range(-1,1)).normalized()
 	updateLife()
 	get_tree().root.get_node("Game/Camera2D").connect("zoom_changed", self, "_on_zoom_changed")
@@ -71,8 +73,6 @@ func handleDying():
 			destroy = true
 
 func _process(delta):
-	if isEnemy:
-		_calculate_movement()
 	timeSinceLastShot += delta
 	if timeSinceLastShot > reloadTime:
 		tryShoot()
@@ -87,31 +87,40 @@ func _process(delta):
 	if Input.is_action_just_pressed("move_command") and selected:
 		setTarget(self.get_global_mouse_position())
 
-func _calculate_movement(): #only if is_enemy = true
+func _calculate_movement(delta):
 	var sum_pos = Vector2(0,0)
-	var number_friends = 0
-	for character in charactersInRange:
-		if character.isEnemy == isEnemy:
-			#friend
-			number_friends += 1
-			sum_pos += character.position - position
-		else:
-			sum_pos += (character.position - position) * 20
-	var middle_pos = sum_pos/(number_friends + (len(charactersInRange) - number_friends) * 20)
+	var number_enemys = 0
+	for partic in charactersInRange:
+		if partic.isEnemy:
+			number_enemys += 1
+			sum_pos += partic.position - position
+	var middle_pos = sum_pos/ number_enemys
 	
 	var sum_intents = Vector2(0,0)
-	for character in charactersInRange:
-		if character.isEnemy == isEnemy:
-			sum_intents += character.intent
-	var middle_intent = sum_intents/number_friends
+	for partic in charactersInRange:
+		if partic.isEnemy:
+			sum_intents += partic.intent
+	var middle_intent = sum_intents/ number_enemys
+	intent =  (middle_intent * 2 + Vector2(rand_range(-1,1), rand_range(-1,1)).normalized()).normalized()
 	
-	intent = (middle_intent*100).normalized() #+ Vector2(rand_range(-1,1), rand_range(-1,1)).normalized()).normalized()
-	var position_change = (intent + middle_pos * 1).normalized()
-	print(position_change)
-	setTarget(position + position_change * 100000000000000)
+	
+	if number_enemys == len(charactersInRange):
+		move_and_collide((200 * intent + middle_pos).clamped(speed))
+	else:
+		var sum_opponent = Vector2(0,0)
+		for partic in charactersInRange:
+			if partic.isEnemy == false:
+				sum_opponent += partic.position - position
+		var middle_opponent = sum_opponent/ (len(charactersInRange) - number_enemys)
+		
+		move_and_collide((20*intent + middle_pos + middle_opponent * 40).clamped(speed))
 	
 func _physics_process(delta: float) -> void:
-	move_and_collide((target - position).clamped(speed))
+	if isEnemy:
+		_calculate_movement(delta)
+		target = position
+	else:
+		move_and_collide((target - position).clamped(speed))
 	if destroy == true:
 		free()
 
