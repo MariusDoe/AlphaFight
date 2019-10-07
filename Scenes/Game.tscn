@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Scenes/CharacterSpawner.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scenes/Camera.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Scenes/Selection.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Music/Alphagamesoundtrack.wav" type="AudioStream" id=4]
 
 [node name="Game" type="Node2D"]
 position = Vector2( 510, 300 )
@@ -12,3 +13,7 @@ position = Vector2( 510, 300 )
 [node name="Camera2D" parent="." instance=ExtResource( 2 )]
 
 [node name="Selection" parent="." instance=ExtResource( 3 )]
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 4 )
+autoplay = true
